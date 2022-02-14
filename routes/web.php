@@ -1,5 +1,8 @@
 <?php
 
+/*use App\Http\Controllers\Auth;*/
+/*use App\Http\Controllers;*/
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +21,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login'); // view は auth.login
+Route::post('login', 'Auth\LoginController@login');
+

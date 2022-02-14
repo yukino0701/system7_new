@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use \APP\Models\user;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Requests\LoginRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -28,13 +33,51 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
+
+    /** 
+    * Create a new controller instance.
+    *
+    * @return void
+    */
+   public function __construct()
+   {
+       $this->middleware('guest')->except('logout');
+   }
+
+
+
+        /**
+     * Where to redirect users after login.
      *
-     * @return void
+     * @param App\Http\Requests\LoginRequest
      */
-    public function __construct()
+    public function  login(Request $request)
     {
-        $this->middleware('guest')->except('logout');
-    }
+        /*ログイン処理*/
+
+        /*dd($credentials);*/
+
+        
+        $credentials = $request->only('email','password');
+
+        /*dd($credentials);*/
+
+        if(Auth::attempt($credentials)){
+            
+            dd($credentials);
+
+            $request->session() -> regenerate();
+
+            return redirect('home');
+
+        }
+
+            /*dd($credentials);*/
+            return redirect('/');
+
+    }    
+
+
+
+
 }

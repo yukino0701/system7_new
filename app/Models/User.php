@@ -4,7 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+
+
+class User extends Authenticatable
 {
     //テーブル名
     protected $table = 'users';
@@ -16,13 +20,17 @@ class User extends Model
         'user_name',
         'email',
         'password',
-        'password_re'
+        'password_re',
+        'id'
 
     ];
+
+    protected $hidden = 'password';
+
     //不変項目
     protected $guarded =
     [
-        'id'
+    
     ];
 
 
